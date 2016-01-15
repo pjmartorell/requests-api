@@ -15,27 +15,36 @@ class RequestsController < ApplicationController
 
   # POST /requests
   def create
-    @request = Request.new(request_params)
+    Request.transaction do
+      @request = Request.new(request_params)
 
-    if @request.save
-      render json: @request, status: :created, location: @request
-    else
-      render json: @request.errors, status: :unprocessable_entity
+      if @request.save
+        render json: @request, status: :created, location: @request
+      else
+        render json: @request.errors, status: :unprocessable_entity
+      end
+      raise_unexpected_exception
     end
   end
 
   # PATCH/PUT /requests/1
   def update
-    if @request.update(request_params)
-      render json: @request
-    else
-      render json: @request.errors, status: :unprocessable_entity
+    Request.transaction do
+      if @request.update(request_params)
+        render json: @request
+      else
+        render json: @request.errors, status: :unprocessable_entity
+      end
+      raise_unexpected_exception
     end
   end
 
   # DELETE /requests/1
   def destroy
-    @request.destroy
+    Request.transaction do
+      @request.destroy
+      raise_unexpected_exception
+    end
   end
 
   private
@@ -46,6 +55,14 @@ class RequestsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def request_params
-      params.fetch(:request, {})
+      params.require(:request).permit!.except(:reference, :updated_at, :created_at)
+    end
+
+    # Raise an exception in 5% of cases
+    def raise_unexpected_exception
+      chance = 1 + rand(100)
+      if chance <= 5
+        raise "Out of service!"
+      end
     end
 end
