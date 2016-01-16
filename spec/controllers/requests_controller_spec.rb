@@ -24,46 +24,44 @@ RSpec.describe RequestsController, :type => :controller do
   # Request. As you add validations to Request, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      "amount"=>50,
+      "days"=>10,
+      "email"=>"email@domain.es",
+      "dni"=>"92795349D",
+      "cellphone"=>"11111-111-1111"
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      "amount"=>-1,
+      "days"=>100,
+      "email"=>"email@domain",
+      "dni"=>"92795349E",
+      "cellphone"=>"1111-111-1111"
+    }
   }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # RequestsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  before(:each) do
+    allow_any_instance_of(RequestsController).to receive(:raise_unexpected_exception)
+  end
 
   describe "GET index" do
     it "assigns all requests as @requests" do
       request = Request.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, params: {}
       expect(assigns(:requests)).to eq([request])
+      expect(response).to be_success
     end
   end
 
   describe "GET show" do
     it "assigns the requested request as @request" do
       request = Request.create! valid_attributes
-      get :show, {:id => request.to_param}, valid_session
+      get :show, params: {:id => request.to_param}
       expect(assigns(:request)).to eq(request)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new request as @request" do
-      get :new, {}, valid_session
-      expect(assigns(:request)).to be_a_new(Request)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested request as @request" do
-      request = Request.create! valid_attributes
-      get :edit, {:id => request.to_param}, valid_session
-      expect(assigns(:request)).to eq(request)
+      expect(response).to be_success
     end
   end
 
@@ -71,31 +69,42 @@ RSpec.describe RequestsController, :type => :controller do
     describe "with valid params" do
       it "creates a new Request" do
         expect {
-          post :create, {:request => valid_attributes}, valid_session
+          post :create, params: {:request => valid_attributes}
         }.to change(Request, :count).by(1)
       end
 
       it "assigns a newly created request as @request" do
-        post :create, {:request => valid_attributes}, valid_session
+        post :create, params: {:request => valid_attributes}
         expect(assigns(:request)).to be_a(Request)
         expect(assigns(:request)).to be_persisted
       end
 
-      it "redirects to the created request" do
-        post :create, {:request => valid_attributes}, valid_session
-        expect(response).to redirect_to(Request.last)
+      it "returns the created request" do
+        post :create, params: {:request => valid_attributes}
+        expect(response.body).to eq(Request.last.to_json)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved request as @request" do
-        post :create, {:request => invalid_attributes}, valid_session
+        post :create, params: {:request => invalid_attributes}
         expect(assigns(:request)).to be_a_new(Request)
+        expect(response).to be_unprocessable
+      end
+    end
+
+    context "when an unexpected exception raises" do
+      before do
+        allow_any_instance_of(RequestsController).to receive(:raise_unexpected_exception).and_raise("Out of service!")
       end
 
-      it "re-renders the 'new' template" do
-        post :create, {:request => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
+      it "rolls back the created request" do
+        expect do
+          post :create, params: {:request => invalid_attributes}
+          expect(assigns(:request)).to be_a_new(Request)
+          expect(assigns(:request)).to not_be_persisted
+          expect(response).to be_server_error
+        end.to raise_error(RuntimeError)
       end
     end
   end
@@ -103,40 +112,56 @@ RSpec.describe RequestsController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          "amount"=>500,
+          "days"=>20,
+          "email"=>"john@doe.com",
+          "dni"=>"92795349D",
+          "cellphone"=>"11111-111-1111"
+        }
       }
 
       it "updates the requested request" do
         request = Request.create! valid_attributes
-        put :update, {:id => request.to_param, :request => new_attributes}, valid_session
+        put :update, params: {:id => request.to_param, :request => new_attributes}
         request.reload
-        skip("Add assertions for updated state")
+        expect(request.email).to eq("john@doe.com")
       end
 
       it "assigns the requested request as @request" do
         request = Request.create! valid_attributes
-        put :update, {:id => request.to_param, :request => valid_attributes}, valid_session
+        put :update, params: {:id => request.to_param, :request => valid_attributes}
         expect(assigns(:request)).to eq(request)
       end
 
-      it "redirects to the request" do
+      it "returns a 200 http status" do
         request = Request.create! valid_attributes
-        put :update, {:id => request.to_param, :request => valid_attributes}, valid_session
-        expect(response).to redirect_to(request)
+        put :update, params: {:id => request.to_param, :request => valid_attributes}
+        expect(response).to be_success
       end
     end
 
     describe "with invalid params" do
       it "assigns the request as @request" do
         request = Request.create! valid_attributes
-        put :update, {:id => request.to_param, :request => invalid_attributes}, valid_session
+        put :update, params: {:id => request.to_param, :request => invalid_attributes}
         expect(assigns(:request)).to eq(request)
+        expect(response).to be_unprocessable
+      end
+    end
+
+    context "when an unexpected exception raises" do
+      before do
+        allow_any_instance_of(RequestsController).to receive(:raise_unexpected_exception).and_raise("Out of service!")
       end
 
-      it "re-renders the 'edit' template" do
+      it "rolls back the updated request" do
         request = Request.create! valid_attributes
-        put :update, {:id => request.to_param, :request => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
+        expect do
+          put :update, params: {:id => request.to_param, :request => invalid_attributes}
+          expect(assigns(:request)).to not_be_persisted
+          expect(response).to be_server_error
+        end.to raise_error(RuntimeError)
       end
     end
   end
@@ -145,14 +170,14 @@ RSpec.describe RequestsController, :type => :controller do
     it "destroys the requested request" do
       request = Request.create! valid_attributes
       expect {
-        delete :destroy, {:id => request.to_param}, valid_session
+        delete :destroy, params: {:id => request.to_param}
       }.to change(Request, :count).by(-1)
     end
 
-    it "redirects to the requests list" do
+    it "returns nothing" do
       request = Request.create! valid_attributes
-      delete :destroy, {:id => request.to_param}, valid_session
-      expect(response).to redirect_to(requests_url)
+      delete :destroy, params: {:id => request.to_param}
+      expect(response).to be_no_content
     end
   end
 
