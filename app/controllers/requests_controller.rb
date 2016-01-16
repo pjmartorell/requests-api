@@ -2,6 +2,7 @@ class RequestsController < ApplicationController
   before_action :set_request, only: [:show, :update, :destroy]
 
   # GET /requests
+  api :GET, '/requests', 'List requests'
   def index
     @requests = Request.all
 
@@ -9,11 +10,13 @@ class RequestsController < ApplicationController
   end
 
   # GET /requests/1
+  api :GET, '/requests/:id', 'Show a request'
   def show
     render json: @request
   end
 
   # POST /requests
+  api :POST, '/requests', 'Create a request'
   def create
     Request.transaction do
       @request = Request.new(request_params)
@@ -28,6 +31,8 @@ class RequestsController < ApplicationController
   end
 
   # PATCH/PUT /requests/1
+  api :PATCH, '/requests/:id', 'Update a request'
+  api :PUT, '/requests/:id', 'Update a request'
   def update
     Request.transaction do
       if @request.update(request_params)
@@ -40,6 +45,7 @@ class RequestsController < ApplicationController
   end
 
   # DELETE /requests/1
+  api :DELETE, '/requests/:id', 'Destroy a request'
   def destroy
     Request.transaction do
       @request.destroy

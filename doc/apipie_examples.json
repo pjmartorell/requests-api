@@ -1,0 +1,332 @@
+{
+  "requests#create": [
+    {
+      "verb": "POST",
+      "path": "/requests",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "request": {
+          "amount": "50",
+          "cellphone": "11111-111-1111",
+          "days": "10",
+          "dni": "92795349D",
+          "email": "email@domain.es"
+        }
+      },
+      "response_data": {
+        "id": 1,
+        "amount": 50,
+        "days": 10,
+        "email": "email@domain.es",
+        "dni": "92795349D",
+        "cellphone": "11111-111-1111",
+        "created_at": "2016-01-16T05:36:52.507Z",
+        "updated_at": "2016-01-16T05:36:52.507Z"
+      },
+      "code": "201",
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/requests",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "request": {
+          "amount": "50",
+          "cellphone": "11111-111-1111",
+          "days": "10",
+          "dni": "92795349D",
+          "email": "email@domain.es"
+        }
+      },
+      "response_data": {
+        "id": 1,
+        "amount": 50,
+        "days": 10,
+        "email": "email@domain.es",
+        "dni": "92795349D",
+        "cellphone": "11111-111-1111",
+        "created_at": "2016-01-16T05:36:52.522Z",
+        "updated_at": "2016-01-16T05:36:52.522Z"
+      },
+      "code": "201",
+      "show_in_doc": 0,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/requests",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "request": {
+          "amount": "50",
+          "cellphone": "11111-111-1111",
+          "days": "10",
+          "dni": "92795349D",
+          "email": "email@domain.es"
+        }
+      },
+      "response_data": {
+        "id": 1,
+        "amount": 50,
+        "days": 10,
+        "email": "email@domain.es",
+        "dni": "92795349D",
+        "cellphone": "11111-111-1111",
+        "created_at": "2016-01-16T05:36:52.536Z",
+        "updated_at": "2016-01-16T05:36:52.536Z"
+      },
+      "code": "201",
+      "show_in_doc": 0,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/requests",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "request": {
+          "amount": "-1",
+          "cellphone": "1111-111-1111",
+          "days": "100",
+          "dni": "92795349E",
+          "email": "email@domain"
+        }
+      },
+      "response_data": {
+        "amount": [
+          "must be greater than or equal to 1"
+        ],
+        "days": [
+          "must be less than or equal to 30"
+        ],
+        "dni": [
+          "with incorrect control letter"
+        ],
+        "email": [
+          "is invalid"
+        ]
+      },
+      "code": "422",
+      "show_in_doc": 0,
+      "recorded": true
+    }
+  ],
+  "requests#destroy": [
+    {
+      "verb": "DELETE",
+      "path": "/requests/1",
+      "versions": [
+        "1.0"
+      ],
+      "query": "",
+      "request_data": null,
+      "response_data": null,
+      "code": "204",
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "DELETE",
+      "path": "/requests/1",
+      "versions": [
+        "1.0"
+      ],
+      "query": "",
+      "request_data": null,
+      "response_data": null,
+      "code": "204",
+      "show_in_doc": 0,
+      "recorded": true
+    }
+  ],
+  "requests#index": [
+    {
+      "verb": "GET",
+      "path": "/requests",
+      "versions": [
+        "1.0"
+      ],
+      "query": "",
+      "request_data": null,
+      "response_data": [
+        {
+          "id": 1,
+          "amount": 50,
+          "days": 10,
+          "email": "email@domain.es",
+          "dni": "92795349D",
+          "cellphone": "11111-111-1111",
+          "created_at": "2016-01-16T05:36:52.330Z",
+          "updated_at": "2016-01-16T05:36:52.330Z"
+        }
+      ],
+      "code": "200",
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "requests#show": [
+    {
+      "verb": "GET",
+      "path": "/requests/1",
+      "versions": [
+        "1.0"
+      ],
+      "query": "",
+      "request_data": null,
+      "response_data": {
+        "id": 1,
+        "amount": 50,
+        "days": 10,
+        "email": "email@domain.es",
+        "dni": "92795349D",
+        "cellphone": "11111-111-1111",
+        "created_at": "2016-01-16T05:36:52.479Z",
+        "updated_at": "2016-01-16T05:36:52.479Z"
+      },
+      "code": "200",
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "requests#update": [
+    {
+      "verb": "PUT",
+      "path": "/requests/1",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "request": {
+          "amount": "500",
+          "cellphone": "11111-111-1111",
+          "days": "20",
+          "dni": "92795349D",
+          "email": "john@doe.com"
+        }
+      },
+      "response_data": {
+        "id": 1,
+        "amount": 500,
+        "cellphone": "11111-111-1111",
+        "days": 20,
+        "dni": "92795349D",
+        "email": "john@doe.com",
+        "created_at": "2016-01-16T05:36:52.589Z",
+        "updated_at": "2016-01-16T05:36:52.596Z"
+      },
+      "code": "200",
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "PUT",
+      "path": "/requests/1",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "request": {
+          "amount": "50",
+          "cellphone": "11111-111-1111",
+          "days": "10",
+          "dni": "92795349D",
+          "email": "email@domain.es"
+        }
+      },
+      "response_data": {
+        "id": 1,
+        "amount": 50,
+        "cellphone": "11111-111-1111",
+        "days": 10,
+        "dni": "92795349D",
+        "email": "email@domain.es",
+        "created_at": "2016-01-16T05:36:52.609Z",
+        "updated_at": "2016-01-16T05:36:52.609Z"
+      },
+      "code": "200",
+      "show_in_doc": 0,
+      "recorded": true
+    },
+    {
+      "verb": "PUT",
+      "path": "/requests/1",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "request": {
+          "amount": "50",
+          "cellphone": "11111-111-1111",
+          "days": "10",
+          "dni": "92795349D",
+          "email": "email@domain.es"
+        }
+      },
+      "response_data": {
+        "id": 1,
+        "amount": 50,
+        "cellphone": "11111-111-1111",
+        "days": 10,
+        "dni": "92795349D",
+        "email": "email@domain.es",
+        "created_at": "2016-01-16T05:36:52.624Z",
+        "updated_at": "2016-01-16T05:36:52.624Z"
+      },
+      "code": "200",
+      "show_in_doc": 0,
+      "recorded": true
+    },
+    {
+      "verb": "PUT",
+      "path": "/requests/1",
+      "versions": [
+        "1.0"
+      ],
+      "query": null,
+      "request_data": {
+        "request": {
+          "amount": "-1",
+          "cellphone": "1111-111-1111",
+          "days": "100",
+          "dni": "92795349E",
+          "email": "email@domain"
+        }
+      },
+      "response_data": {
+        "amount": [
+          "must be greater than or equal to 1"
+        ],
+        "days": [
+          "must be less than or equal to 30"
+        ],
+        "dni": [
+          "with incorrect control letter"
+        ],
+        "email": [
+          "is invalid"
+        ]
+      },
+      "code": "422",
+      "show_in_doc": 0,
+      "recorded": true
+    }
+  ]
+}

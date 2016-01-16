@@ -92,6 +92,8 @@ GEM
       method_source
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    apipie-rails (0.3.5)
+      json
     arel (7.0.0)
     builder (3.2.2)
     byebug (8.2.1)
@@ -204,6 +206,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  apipie-rails (~> 0.3.5)
   byebug
   puma
   rails (>= 5.0.0.beta1, < 5.1)
