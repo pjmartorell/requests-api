@@ -3,13 +3,16 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.0.0.beta1', '< 5.1'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 # Use Puma as the app server
 gem 'puma'
 gem 'apipie-rails', '~> 0.3.5'
+
+# Heroku
+gem 'rails_12factor', group: :production
+gem 'pg'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -27,6 +30,7 @@ group :development, :test do
 	  gem lib, :git => "https://github.com/rspec/#{lib}.git", :branch => 'master'
 	end
   gem 'rails-controller-testing'
+  gem 'sqlite3'
 end
 
 group :development do
@@ -36,3 +40,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+ruby "2.3.0"
